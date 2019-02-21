@@ -105,13 +105,13 @@
 			children = (
 				394A163F21AC44640089185D /* AppDelegate.swift */,
 				394A166D21AC47130089185D /* Converter.swift */,
+				39B9BECD221EE7C200CB09BD /* Pluralize.swift */,
 				394A164121AC44640089185D /* ViewController.swift */,
 				39B9BECF221EE86E00CB09BD /* Main.storyboard */,
 				394A164621AC44650089185D /* Assets.xcassets */,
 				394A164821AC44650089185D /* LaunchScreen.storyboard */,
 				394A164B21AC44650089185D /* Info.plist */,
 				39B9BECB221EE7BB00CB09BD /* Inflector.plist */,
-				39B9BECD221EE7C200CB09BD /* Pluralize.swift */,
 			);
 			path = SwiftModelGenerator;
 			sourceTree = "<group>";
@@ -439,6 +439,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZB5432BTR2;
 				INFOPLIST_FILE = SwiftModelGenerator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -457,6 +458,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZB5432BTR2;
 				INFOPLIST_FILE = SwiftModelGenerator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
