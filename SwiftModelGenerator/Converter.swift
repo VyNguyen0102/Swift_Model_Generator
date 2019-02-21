@@ -13,13 +13,14 @@ class Converter {
         guard let dic = json.dictionary else {
             return ""
         }
-        let result = convertDictionaryToStruct(key: "YourModel", value: dic)
+        var result = [StructModel]()
+        result.append(contentsOf: convertDictionaryToStruct(key: "Model", value: dic))
         return result.reduce("", { $0 + $1.toString() })
     }
-    static func convertDictionaryToStruct(key: String, value: Any) -> [StructModel] {
+    static func convertDictionaryToStruct(key: String, value: Any?) -> [StructModel] {
+        var result = [StructModel]()
+        var strucModel = StructModel.init(structName: key.singularize().camelized.uppercasingFirst)
         if let value = value as? [String: Any] {
-            var result = [StructModel]()
-            var strucModel = StructModel.init(structName: key.camelized.uppercasingFirst)
             value.forEach { (key, value) in
                 if value is String {
                     strucModel.variables[key] = DataType.string
@@ -30,13 +31,16 @@ class Converter {
                 } else if value is [String: Any] {
                     strucModel.variables[key] = DataType.typeStruct(structName: key)
                     result.append(contentsOf: Converter.convertDictionaryToStruct(key: key, value: value as! [String: Any]))
+                } else if value is [Any] {
+                    strucModel.variables[key] = DataType.listOf(structName: key.singularize().uppercasingFirst)
+                    result.append(contentsOf: Converter.convertDictionaryToStruct(key: key, value: (value as! [Any]).first))
+                } else { // Nil will default declare by Model
+                    strucModel.variables[key] = DataType.typeStruct(structName: key)
                 }
             }
             result.append(strucModel)
-            return result
-        } else {
-            return []
         }
+        return result
     }
 }
 
@@ -44,6 +48,7 @@ enum DataType {
     case bool
     case string
     case double
+    case listOf(structName: String)
     case typeStruct(structName: String)
     var name: String {
         switch self {
@@ -53,10 +58,27 @@ enum DataType {
             return "String"
         case .double:
             return "Double"
+        case .listOf(let structName):
+            return "[\(structName)]"
         case .typeStruct(let structName):
             return structName.camelized.uppercasingFirst
         }
     }
+    var defaultValue: String {
+        switch self {
+        case .bool:
+            return "false"
+        case .string:
+            return "\"\""
+        case .double:
+            return "0.0"
+        case .listOf(_):
+            return "[]"
+        case .typeStruct(_):
+            return "nil"
+        }
+    }
+
 }
 
 // Model
@@ -68,9 +90,9 @@ struct StructModel {
         self.variables = [String: DataType]()
     }
     func toString() -> String {
-        return "struct \(structName) {\n"
+        return "struct \(structName) : Mappable {\n"
             + variables.toString()
-            + "\tfunc mapping(map: Map) {\n"
+            + "\tinit(map: Mapper) {\n"
             + variables.toMaping()
             + "\t}\n"
             + "}\n"
@@ -81,7 +103,7 @@ extension Sequence where Iterator.Element == (key: String, value: DataType) {
         return reduce("", { $0 + "\tvar \($1.key.camelized): \($1.value.name)\n"})
     }
     func toMaping() -> String {
-        return reduce("", { $0 + "\t\t\($1.key.camelized)\t\t<- map[\"\($1.key)\"]\n"})
+        return reduce("", { $0 + "\t\t\($1.key.camelized)\t\t= map.optionalFrom(\"\($1.key)\") ?? \($1.value.defaultValue)\n"})
     }
 }
 extension String {

@@ -21,44 +21,75 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="BHX-S3-nJ9">
                                 <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zom-If-up0" userLabel="Paste">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                        <color key="backgroundColor" red="0.338265121" green="0.76429349179999995" blue="0.61294627189999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="cpw-9E-OPT"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="PASTE">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="copyButtonDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="f51-zI-zLL"/>
+                                            <action selector="pasteButtonDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="RMs-a9-aWH"/>
+                                        </connections>
+                                    </button>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="uCk-9M-N9B">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="323.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="375" height="273.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <string key="text">{"widget": {
-    "debug": "on",
-    "window": {
-        "title": "Sample Konfabulator Widget",
-        "name": "main_window",
-        "width": 500,
-        "height": 500
+                                        <string key="text">{
+  "widget": {
+    "nullItem": null,
+    "modelItem": {
+      "name": "Sample Konfabulator Widget",
+      "width": 500,
+      "height": 500
     },
-    "image": { 
-        "src": "Images/Sun.png",
+    "items": [
+      {
+        "boolItem": true,
         "name": "sun1",
         "hOffset": 250,
         "vOffset": 250,
         "alignment": "center"
-    },
-    "text": {
-        "data": "Click Here",
-        "size": 36,
-        "style": "bold",
-        "name": "text1",
-        "hOffset": 250,
-        "vOffset": 100,
-        "alignment": "center",
-        "onMouseUp": "sun1.opacity = (sun1.opacity / 100) * 90;"
-    }
-}} </string>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+      },
+      {
+        "boolItem": false,
+        "name": "sun1",
+        "hOffset": 123,
+        "vOffset": 123,
+        "alignment": "center"
+      }
+    ]
+  },
+  "Error": null
+}</string>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="EDl-E5-NYg">
-                                        <rect key="frame" x="0.0" y="323.5" width="375" height="323.5"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <rect key="frame" x="0.0" y="323.5" width="375" height="273.5"/>
+                                        <color key="backgroundColor" red="0.95769780869999999" green="0.91387359893202535" blue="0.95136182117567347" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="textColor" red="0.0" green="0.19157492752611727" blue="0.40380859375" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jKB-fJ-QPF">
+                                        <rect key="frame" x="0.0" y="597" width="375" height="50"/>
+                                        <color key="backgroundColor" red="0.338265121" green="0.76429349179999995" blue="0.61294627189999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="gLI-mj-QZM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                        <state key="normal" title="COPY">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="copyButtonDidTap:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R3v-3W-aY1"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="uCk-9M-N9B" firstAttribute="height" secondItem="EDl-E5-NYg" secondAttribute="height" id="Kp2-Im-jqF"/>

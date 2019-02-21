@@ -17,16 +17,17 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         inputTextView.delegate = self
     }
+    @IBAction func pasteButtonDidTap(_ sender: Any) {
+        inputTextView.text = UIPasteboard.general.string
+    }
+    @IBAction func copyButtonDidTap(_ sender: Any) {
+        UIPasteboard.general.string = outputTextView.text
+    }
 }
 
 extension ViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
-        var sampleStruct = StructModel.init(structName: "StructModel")
-        sampleStruct.variables["meoMeo"] = DataType.bool
-        sampleStruct.variables["goGo"] = DataType.string
-        sampleStruct.variables["quakQuak"] = DataType.typeStruct(structName: "HeoHeo")
         outputTextView.text = Converter.convertStringToClass(json: inputTextView.text)
-
     }
 }
 
