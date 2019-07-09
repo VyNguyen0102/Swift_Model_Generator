@@ -17,6 +17,7 @@
 		39B9BECC221EE7BB00CB09BD /* Inflector.plist in Resources */ = {isa = PBXBuildFile; fileRef = 39B9BECB221EE7BB00CB09BD /* Inflector.plist */; };
 		39B9BECE221EE7C200CB09BD /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B9BECD221EE7C200CB09BD /* Pluralize.swift */; };
 		39B9BED0221EE86E00CB09BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B9BECF221EE86E00CB09BD /* Main.storyboard */; };
+		6AC4220722D4AF180043D85D /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC4220622D4AF180043D85D /* StringExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +54,7 @@
 		39B9BECB221EE7BB00CB09BD /* Inflector.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Inflector.plist; sourceTree = "<group>"; };
 		39B9BECD221EE7C200CB09BD /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pluralize.swift; sourceTree = "<group>"; };
 		39B9BECF221EE86E00CB09BD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		6AC4220622D4AF180043D85D /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 				394A164821AC44650089185D /* LaunchScreen.storyboard */,
 				394A164B21AC44650089185D /* Info.plist */,
 				39B9BECB221EE7BB00CB09BD /* Inflector.plist */,
+				6AC4220622D4AF180043D85D /* StringExtension.swift */,
 			);
 			path = SwiftModelGenerator;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 			files = (
 				394A164221AC44640089185D /* ViewController.swift in Sources */,
 				394A166E21AC47130089185D /* Converter.swift in Sources */,
+				6AC4220722D4AF180043D85D /* StringExtension.swift in Sources */,
 				39B9BECE221EE7C200CB09BD /* Pluralize.swift in Sources */,
 				394A164021AC44640089185D /* AppDelegate.swift in Sources */,
 			);

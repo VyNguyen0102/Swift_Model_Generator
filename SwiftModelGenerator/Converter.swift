@@ -24,10 +24,10 @@ class Converter {
             value.forEach { (key, value) in
                 if value is String {
                     strucModel.variables[key] = DataType.string
-                } else if value is Bool {
-                    strucModel.variables[key] = DataType.bool
                 } else if value is Double {
                     strucModel.variables[key] = DataType.double
+                } else if value is Bool {
+                    strucModel.variables[key] = DataType.bool
                 } else if value is [String: Any] {
                     strucModel.variables[key] = DataType.typeStruct(structName: key)
                     result.append(contentsOf: Converter.convertDictionaryToStruct(key: key, value: value as! [String: Any]))
@@ -103,7 +103,7 @@ extension Sequence where Iterator.Element == (key: String, value: DataType) {
         return reduce("", { $0 + "\tvar \($1.key.camelized): \($1.value.name)\n"})
     }
     func toMaping() -> String {
-        return reduce("", { $0 + "\t\t\($1.key.camelized)\t\t= map.optionalFrom(\"\($1.key)\") ?? \($1.value.defaultValue)\n"})
+        return reduce("", { $0 + "\t\t\($1.key.camelized)\(String.createBlankBy(text: $1.key.camelized, numberOfMaxBlankSpace: 20))= map.optionalFrom(\"\($1.key)\") ?? \($1.value.defaultValue)\n"})
     }
 }
 extension String {
