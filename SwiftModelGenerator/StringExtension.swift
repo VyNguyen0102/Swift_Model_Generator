@@ -10,8 +10,8 @@ import Foundation
 
 extension String {
     static func createBlankBy(text: String, numberOfMaxBlankSpace: Int) -> String {
-        if text.count > numberOfMaxBlankSpace {
-            return ""
+        if text.count >= numberOfMaxBlankSpace {
+            return " "
         }
         let numberOfBlankSpace = numberOfMaxBlankSpace - text.count
         return String(repeating: " ", count: numberOfBlankSpace)

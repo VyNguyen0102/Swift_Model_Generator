@@ -14,27 +14,33 @@ class Converter {
             return ""
         }
         var result = [StructModel]()
-        result.append(contentsOf: convertDictionaryToStruct(key: "Model", value: dic))
+        result.append(contentsOf: convertDictionaryToStruct(modelKey: "Model", value: dic))
         return result.reduce("", { $0 + $1.toString() })
     }
-    static func convertDictionaryToStruct(key: String, value: Any?) -> [StructModel] {
+    static func convertDictionaryToStruct(modelKey: String, value: Any?) -> [StructModel] {
         var result = [StructModel]()
-        var strucModel = StructModel.init(structName: key.singularize().camelized.uppercasingFirst)
+        var strucModel = StructModel.init(structName: modelKey.camelized.uppercasingFirst)
         if let value = value as? [String: Any] {
             value.forEach { (key, value) in
                 if value is String {
                     strucModel.variables[key] = DataType.string
-                } else if value is Double {
-                    strucModel.variables[key] = DataType.double
                 } else if value is Bool {
                     strucModel.variables[key] = DataType.bool
-                } else if value is [String: Any] {
+                } else if value is Double {
+                    if value is Int {
+                        strucModel.variables[key] = DataType.int
+                    } else {
+                        strucModel.variables[key] = DataType.double
+                    }
+                }  else if value is [String: Any] {
+                    strucModel.structName = modelKey.camelized.uppercasingFirst
                     strucModel.variables[key] = DataType.typeStruct(structName: key)
-                    result.append(contentsOf: Converter.convertDictionaryToStruct(key: key, value: value as! [String: Any]))
+                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.uppercasingFirst, value: value as! [String: Any]))
                 } else if value is [Any] {
                     strucModel.variables[key] = DataType.listOf(structName: key.singularize().uppercasingFirst)
-                    result.append(contentsOf: Converter.convertDictionaryToStruct(key: key, value: (value as! [Any]).first))
+                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.singularize().uppercasingFirst, value: (value as! [Any]).first))
                 } else { // Nil will default declare by Model
+                    strucModel.structName = modelKey.camelized.uppercasingFirst
                     strucModel.variables[key] = DataType.typeStruct(structName: key)
                 }
             }
@@ -47,6 +53,7 @@ class Converter {
 enum DataType {
     case bool
     case string
+    case int
     case double
     case listOf(structName: String)
     case typeStruct(structName: String)
@@ -56,6 +63,8 @@ enum DataType {
             return "Bool"
         case .string:
             return "String"
+        case .int:
+            return "Int"
         case .double:
             return "Double"
         case .listOf(let structName):
@@ -70,6 +79,8 @@ enum DataType {
             return "false"
         case .string:
             return "\"\""
+        case .int:
+            return "0"
         case .double:
             return "0.0"
         case .listOf(_):
@@ -78,7 +89,12 @@ enum DataType {
             return "nil"
         }
     }
-
+    var isOptional: Bool {
+        if case .typeStruct(_) = self {
+            return true
+        }
+        return false
+    }
 }
 
 // Model
@@ -91,16 +107,16 @@ struct StructModel {
     }
     func toString() -> String {
         return "struct \(structName) : Mappable {\n"
-            + variables.toString()
+            + variables.sorted( by: {$0.key < $1.key}).toString()
             + "\tinit(map: Mapper) {\n"
-            + variables.toMaping()
+            + variables.sorted( by: {$0.key < $1.key}).toMaping()
             + "\t}\n"
             + "}\n"
     }
 }
 extension Sequence where Iterator.Element == (key: String, value: DataType) {
     func toString() -> String {
-        return reduce("", { $0 + "\tvar \($1.key.camelized): \($1.value.name)\n"})
+        return reduce("", { $0 + "\tvar \($1.key.camelized): \($1.value.name)\( $1.value.isOptional ? "?" : "" )\n"})
     }
     func toMaping() -> String {
         return reduce("", { $0 + "\t\t\($1.key.camelized)\(String.createBlankBy(text: $1.key.camelized, numberOfMaxBlankSpace: 20))= map.optionalFrom(\"\($1.key)\") ?? \($1.value.defaultValue)\n"})
