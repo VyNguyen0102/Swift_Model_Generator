@@ -18,6 +18,9 @@
 		39B9BECE221EE7C200CB09BD /* Pluralize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39B9BECD221EE7C200CB09BD /* Pluralize.swift */; };
 		39B9BED0221EE86E00CB09BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 39B9BECF221EE86E00CB09BD /* Main.storyboard */; };
 		6AC4220722D4AF180043D85D /* StringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AC4220622D4AF180043D85D /* StringExtension.swift */; };
+		7F9F5A5DE261DD1A459DB142 /* Pods_SwiftModelGeneratorTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37AD802457F30832F7435914 /* Pods_SwiftModelGeneratorTests.framework */; };
+		D6C9D8DB797D05876333CB15 /* Pods_SwiftModelGeneratorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CC427074AD51C8738CA3D63 /* Pods_SwiftModelGeneratorUITests.framework */; };
+		E5EF9E504C5C3FEB0DF01321 /* Pods_SwiftModelGenerator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E39DC14D0F72B9B1247C8DB4 /* Pods_SwiftModelGenerator.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		37AD802457F30832F7435914 /* Pods_SwiftModelGeneratorTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftModelGeneratorTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		394A163C21AC44640089185D /* SwiftModelGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SwiftModelGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		394A163F21AC44640089185D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		394A164121AC44640089185D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,7 +58,15 @@
 		39B9BECB221EE7BB00CB09BD /* Inflector.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Inflector.plist; sourceTree = "<group>"; };
 		39B9BECD221EE7C200CB09BD /* Pluralize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pluralize.swift; sourceTree = "<group>"; };
 		39B9BECF221EE86E00CB09BD /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		64432D00B0216BCEA0683C47 /* Pods-SwiftModelGenerator.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftModelGenerator.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftModelGenerator/Pods-SwiftModelGenerator.debug.xcconfig"; sourceTree = "<group>"; };
 		6AC4220622D4AF180043D85D /* StringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExtension.swift; sourceTree = "<group>"; };
+		790E85DD01213ED67771678F /* Pods-SwiftModelGeneratorUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftModelGeneratorUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftModelGeneratorUITests/Pods-SwiftModelGeneratorUITests.release.xcconfig"; sourceTree = "<group>"; };
+		7CC427074AD51C8738CA3D63 /* Pods_SwiftModelGeneratorUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftModelGeneratorUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		96BC5AC18CDA180922555B5B /* Pods-SwiftModelGeneratorUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftModelGeneratorUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftModelGeneratorUITests/Pods-SwiftModelGeneratorUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		99E3894D1F7696B10E84D207 /* Pods-SwiftModelGeneratorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftModelGeneratorTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftModelGeneratorTests/Pods-SwiftModelGeneratorTests.release.xcconfig"; sourceTree = "<group>"; };
+		D35663179F3DFD34E77EAD0A /* Pods-SwiftModelGenerator.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftModelGenerator.release.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftModelGenerator/Pods-SwiftModelGenerator.release.xcconfig"; sourceTree = "<group>"; };
+		D4F1336F3DF950591FA6A5CC /* Pods-SwiftModelGeneratorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SwiftModelGeneratorTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SwiftModelGeneratorTests/Pods-SwiftModelGeneratorTests.debug.xcconfig"; sourceTree = "<group>"; };
+		E39DC14D0F72B9B1247C8DB4 /* Pods_SwiftModelGenerator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SwiftModelGenerator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E5EF9E504C5C3FEB0DF01321 /* Pods_SwiftModelGenerator.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F9F5A5DE261DD1A459DB142 /* Pods_SwiftModelGeneratorTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,12 +90,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6C9D8DB797D05876333CB15 /* Pods_SwiftModelGeneratorUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0BBB498E3901A7699AFEA8DD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E39DC14D0F72B9B1247C8DB4 /* Pods_SwiftModelGenerator.framework */,
+				37AD802457F30832F7435914 /* Pods_SwiftModelGeneratorTests.framework */,
+				7CC427074AD51C8738CA3D63 /* Pods_SwiftModelGeneratorUITests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		394A163321AC44640089185D = {
 			isa = PBXGroup;
 			children = (
@@ -89,6 +114,8 @@
 				394A165321AC44650089185D /* SwiftModelGeneratorTests */,
 				394A165E21AC44650089185D /* SwiftModelGeneratorUITests */,
 				394A163D21AC44640089185D /* Products */,
+				A07F89C344CBB68281116794 /* Pods */,
+				0BBB498E3901A7699AFEA8DD /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,6 +164,19 @@
 			path = SwiftModelGeneratorUITests;
 			sourceTree = "<group>";
 		};
+		A07F89C344CBB68281116794 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				64432D00B0216BCEA0683C47 /* Pods-SwiftModelGenerator.debug.xcconfig */,
+				D35663179F3DFD34E77EAD0A /* Pods-SwiftModelGenerator.release.xcconfig */,
+				D4F1336F3DF950591FA6A5CC /* Pods-SwiftModelGeneratorTests.debug.xcconfig */,
+				99E3894D1F7696B10E84D207 /* Pods-SwiftModelGeneratorTests.release.xcconfig */,
+				96BC5AC18CDA180922555B5B /* Pods-SwiftModelGeneratorUITests.debug.xcconfig */,
+				790E85DD01213ED67771678F /* Pods-SwiftModelGeneratorUITests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -144,9 +184,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 394A166421AC44650089185D /* Build configuration list for PBXNativeTarget "SwiftModelGenerator" */;
 			buildPhases = (
+				A92A652F3E7ABC7DD564C06E /* [CP] Check Pods Manifest.lock */,
 				394A163821AC44640089185D /* Sources */,
 				394A163921AC44640089185D /* Frameworks */,
 				394A163A21AC44640089185D /* Resources */,
+				6AFA35329028097536A27FB0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -161,6 +203,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 394A166721AC44650089185D /* Build configuration list for PBXNativeTarget "SwiftModelGeneratorTests" */;
 			buildPhases = (
+				F110B47BE5F3810979C5B4A9 /* [CP] Check Pods Manifest.lock */,
 				394A164C21AC44650089185D /* Sources */,
 				394A164D21AC44650089185D /* Frameworks */,
 				394A164E21AC44650089185D /* Resources */,
@@ -179,6 +222,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 394A166A21AC44650089185D /* Build configuration list for PBXNativeTarget "SwiftModelGeneratorUITests" */;
 			buildPhases = (
+				54A0883AA9895A75EA70D1A9 /* [CP] Check Pods Manifest.lock */,
 				394A165721AC44650089185D /* Sources */,
 				394A165821AC44650089185D /* Frameworks */,
 				394A165921AC44650089185D /* Resources */,
@@ -263,6 +307,81 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		54A0883AA9895A75EA70D1A9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftModelGeneratorUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6AFA35329028097536A27FB0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-SwiftModelGenerator/Pods-SwiftModelGenerator-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SwiftModelGenerator/Pods-SwiftModelGenerator-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A92A652F3E7ABC7DD564C06E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftModelGenerator-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F110B47BE5F3810979C5B4A9 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-SwiftModelGeneratorTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		394A163821AC44640089185D /* Sources */ = {
@@ -438,10 +557,11 @@
 		};
 		394A166521AC44650089185D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 64432D00B0216BCEA0683C47 /* Pods-SwiftModelGenerator.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZB5432BTR2;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SwiftModelGenerator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -450,6 +570,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kiobox.SwiftModelGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -457,10 +578,11 @@
 		};
 		394A166621AC44650089185D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35663179F3DFD34E77EAD0A /* Pods-SwiftModelGenerator.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = ZB5432BTR2;
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = SwiftModelGenerator/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -469,6 +591,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.kiobox.SwiftModelGenerator;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -476,6 +599,7 @@
 		};
 		394A166821AC44650089185D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D4F1336F3DF950591FA6A5CC /* Pods-SwiftModelGeneratorTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -497,6 +621,7 @@
 		};
 		394A166921AC44650089185D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 99E3894D1F7696B10E84D207 /* Pods-SwiftModelGeneratorTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -518,6 +643,7 @@
 		};
 		394A166B21AC44650089185D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96BC5AC18CDA180922555B5B /* Pods-SwiftModelGeneratorUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -538,6 +664,7 @@
 		};
 		394A166C21AC44650089185D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 790E85DD01213ED67771678F /* Pods-SwiftModelGeneratorUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

@@ -7,39 +7,46 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class Converter {
-    static func convertStringToClass(json: String) -> String {
-        guard let dic = json.dictionary else {
-            return ""
-        }
+    static func convertStringToClass(jsonString: String) -> String {
+        let json = JSON.init(parseJSON: jsonString)
         var result = [StructModel]()
-        result.append(contentsOf: convertDictionaryToStruct(modelKey: "Model", value: dic))
+        result.append(contentsOf: convertDictionaryToStruct(modelKey: "Model", jsonValue: json))
         return result.reduce("", { $0 + $1.toString() })
     }
-    static func convertDictionaryToStruct(modelKey: String, value: Any?) -> [StructModel] {
+    static func convertDictionaryToStruct(modelKey: String, jsonValue: JSON) -> [StructModel] {
         var result = [StructModel]()
         var strucModel = StructModel.init(structName: modelKey.camelized.uppercasingFirst)
-        if let value = value as? [String: Any] {
-            value.forEach { (key, value) in
-                if value is String {
-                    strucModel.variables[key] = DataType.string
-                } else if value is Bool {
-                    strucModel.variables[key] = DataType.bool
-                } else if value is Double {
-                    if value is Int {
+        if let jsonValue = jsonValue.dictionary {
+            jsonValue.forEach { (key, value) in
+                switch value.type {
+                case .number:
+                    if value.rawValue is Int {
+                        print("\(value.description) is Int")
                         strucModel.variables[key] = DataType.int
                     } else {
+                        print("\(value.description) is Double")
                         strucModel.variables[key] = DataType.double
                     }
-                }  else if value is [String: Any] {
+                case .string:
+                    strucModel.variables[key] = DataType.string
+                case .bool:
+                    strucModel.variables[key] = DataType.bool
+                case .array:
+                    if let arrayValue = value.array,
+                        let json = arrayValue.sorted(by: { (first, second) -> Bool in
+                            first.count > second.count
+                        }).first {
+                        strucModel.variables[key] = DataType.listOf(structName: key.singularize().uppercasingFirst)
+                        result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.singularize().uppercasingFirst, jsonValue: json))
+                    }
+                case .dictionary:
                     strucModel.structName = modelKey.camelized.uppercasingFirst
                     strucModel.variables[key] = DataType.typeStruct(structName: key)
-                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.uppercasingFirst, value: value as! [String: Any]))
-                } else if value is [Any] {
-                    strucModel.variables[key] = DataType.listOf(structName: key.singularize().uppercasingFirst)
-                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.singularize().uppercasingFirst, value: (value as! [Any]).first))
-                } else { // Nil will default declare by Model
+                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.uppercasingFirst, jsonValue: value))
+                default :
                     strucModel.structName = modelKey.camelized.uppercasingFirst
                     strucModel.variables[key] = DataType.typeStruct(structName: key)
                 }
@@ -47,6 +54,33 @@ class Converter {
             result.append(strucModel)
         }
         return result
+//        if let value = value as? [String: Any] {
+//            value.forEach { (key, value) in
+//                if value is String {
+//                    strucModel.variables[key] = DataType.string
+//                } else if value is Bool {
+//                    strucModel.variables[key] = DataType.bool
+//                } else if value is Double {
+//                    if value is Int {
+//                        strucModel.variables[key] = DataType.int
+//                    } else {
+//                        strucModel.variables[key] = DataType.double
+//                    }
+//                }  else if value is [String: Any] {
+//                    strucModel.structName = modelKey.camelized.uppercasingFirst
+//                    strucModel.variables[key] = DataType.typeStruct(structName: key)
+//                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.uppercasingFirst, value: value as! [String: Any]))
+//                } else if value is [Any] {
+//                    strucModel.variables[key] = DataType.listOf(structName: key.singularize().uppercasingFirst)
+//                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.singularize().uppercasingFirst, value: (value as! [Any]).first))
+//                } else { // Nil will default declare by Model
+//                    strucModel.structName = modelKey.camelized.uppercasingFirst
+//                    strucModel.variables[key] = DataType.typeStruct(structName: key)
+//                }
+//            }
+//            result.append(strucModel)
+//        }
+        
     }
 }
 
@@ -106,20 +140,20 @@ struct StructModel {
         self.variables = [String: DataType]()
     }
     func toString() -> String {
-        return "struct \(structName) : Mappable {\n"
+        return "struct \(structName): Codable {\n"
             + variables.sorted( by: {$0.key < $1.key}).toString()
-            + "\tinit(map: Mapper) {\n"
-            + variables.sorted( by: {$0.key < $1.key}).toMaping()
+            + "\n\tenum CodingKeys: String, CodingKey {\n"
+            + variables.sorted( by: {$0.key < $1.key}).toKey()
             + "\t}\n"
-            + "}\n"
+            + "}\n\n"
     }
 }
 extension Sequence where Iterator.Element == (key: String, value: DataType) {
     func toString() -> String {
-        return reduce("", { $0 + "\tvar \($1.key.camelized): \($1.value.name)\( $1.value.isOptional ? "?" : "" )\n"})
+        return reduce("", { $0 + "\tvar \($1.key.camelized): \($1.value.name)?\n"})
     }
-    func toMaping() -> String {
-        return reduce("", { $0 + "\t\t\($1.key.camelized)\(String.createBlankBy(text: $1.key.camelized, numberOfMaxBlankSpace: 20))= map.optionalFrom(\"\($1.key)\") ?? \($1.value.defaultValue)\n"})
+    func toKey() -> String {
+        return reduce("", { $0 + "\t\tcase \($1.key.camelized)\(String.createBlankBy(text: $1.key.camelized, numberOfMaxBlankSpace: 20))= \"\($1.key)\"\n"})
     }
 }
 extension String {

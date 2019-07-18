@@ -1,0 +1,6 @@
+framework module Pods_SwiftModelGeneratorUITests {
+  umbrella header "Pods-SwiftModelGeneratorUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

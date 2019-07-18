@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         inputTextView.delegate = self
+        inputTextView.text = UserDefaults.standard.string(forKey: "inputTextView")
     }
     @IBAction func pasteButtonDidTap(_ sender: Any) {
         inputTextView.text = UIPasteboard.general.string
@@ -27,7 +28,8 @@ class ViewController: UIViewController {
 
 extension ViewController: UITextViewDelegate {
     func textViewDidEndEditing(_ textView: UITextView) {
-        outputTextView.text = Converter.convertStringToClass(json: inputTextView.text)
+        outputTextView.text = Converter.convertStringToClass(jsonString: inputTextView.text)
+        UserDefaults.standard.set(inputTextView.text, forKey: "inputTextView")
     }
 }
 
