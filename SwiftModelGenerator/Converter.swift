@@ -142,12 +142,23 @@ struct StructModel {
     func toString() -> String {
         return "struct \(structName): Codable {\n"
             + variables.sorted( by: {$0.key < $1.key}).toString()
+            
             + "\tinit("
             + variables.sorted( by: {$0.key < $1.key}).toInitParam()
             + ") {\n"
             + variables.sorted( by: {$0.key < $1.key}).toInitDeclareData()
-            + "}"
-            + "\n\tenum CodingKeys: String, CodingKey {\n"
+            + "\t}\n"
+            
+            + "\tinit?(json: JSON) {\n"
+            + variables.sorted( by: {$0.key < $1.key}).toInitDeclareDataFromJson()
+            + "\t}\n"
+            
+            + "\tvar dictionary: [String: Any] {\n"
+            + "\t\tvar dictionary:[String: Any] = [:]\n"
+            + variables.sorted( by: {$0.key < $1.key}).toDictionaryString()
+            + "\t\treturn dictionary\n"
+            + "\t}\n"
+            + "\tenum CodingKeys: String, CodingKey {\n"
             + variables.sorted( by: {$0.key < $1.key}).toKey()
             + "\t}\n"
             + "}\n\n"
@@ -163,6 +174,14 @@ extension Sequence where Iterator.Element == (key: String, value: DataType) {
     
     func toInitDeclareData() -> String {
         return reduce("", { $0 + "\t\tself.\($1.key.camelized) = \($1.key.camelized)\n"})
+    }
+    
+    func toInitDeclareDataFromJson() -> String {
+        return reduce("", { $0 + "\t\tself.\($1.key.camelized) = json[\"\($1.key)\"].\($1.value.name.lowercased())Value\n"})
+    }
+    
+    func toDictionaryString() -> String {
+        return reduce("", { $0 + "\t\tdictionary[\"\($1.key)\"] = self.\($1.key.camelized)\n"})
     }
     
     func toKey() -> String {
