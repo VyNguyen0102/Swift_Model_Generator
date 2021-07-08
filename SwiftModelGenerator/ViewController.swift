@@ -18,9 +18,15 @@ class ViewController: UIViewController {
         inputTextView.delegate = self
         inputTextView.text = UserDefaults.standard.string(forKey: "inputTextView")
     }
+    @IBAction func clearButtonDidTap(_ sender: Any) {
+        inputTextView.text = ""
+        outputTextView.text = ""
+    }
+    
     @IBAction func pasteButtonDidTap(_ sender: Any) {
         inputTextView.text = UIPasteboard.general.string
     }
+    
     @IBAction func copyButtonDidTap(_ sender: Any) {
         UIPasteboard.general.string = outputTextView.text
     }
