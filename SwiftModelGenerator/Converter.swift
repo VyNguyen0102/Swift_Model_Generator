@@ -142,6 +142,11 @@ struct StructModel {
     func toString() -> String {
         return "struct \(structName): Codable {\n"
             + variables.sorted( by: {$0.key < $1.key}).toString()
+            + "\tinit("
+            + variables.sorted( by: {$0.key < $1.key}).toInitParam()
+            + ") {\n"
+            + variables.sorted( by: {$0.key < $1.key}).toInitDeclareData()
+            + "}"
             + "\n\tenum CodingKeys: String, CodingKey {\n"
             + variables.sorted( by: {$0.key < $1.key}).toKey()
             + "\t}\n"
@@ -152,6 +157,14 @@ extension Sequence where Iterator.Element == (key: String, value: DataType) {
     func toString() -> String {
         return reduce("", { $0 + "\tvar \($1.key.camelized): \($1.value.name)?\n"})
     }
+    func toInitParam() -> String {
+        return String(reduce("", { $0 + "\t\t\($1.key.camelized): \($1.value.name)?,\n"}).dropLast(2).dropFirst(2))
+    }
+    
+    func toInitDeclareData() -> String {
+        return reduce("", { $0 + "\t\tself.\($1.key.camelized) = \($1.key.camelized)\n"})
+    }
+    
     func toKey() -> String {
         return reduce("", { $0 + "\t\tcase \($1.key.camelized)\(String.createBlankBy(text: $1.key.camelized, numberOfMaxBlankSpace: 20))= \"\($1.key)\"\n"})
     }
