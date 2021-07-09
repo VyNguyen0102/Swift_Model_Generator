@@ -143,6 +143,10 @@ struct StructModel {
         return "struct \(structName): Codable {\n"
             + variables.sorted( by: {$0.key < $1.key}).toString()
             
+            + "\tprivate let Fields = (\n"
+            + variables.sorted( by: {$0.key < $1.key}).toFields()
+            + "\t)\n"
+            
             + "\tinit("
             + variables.sorted( by: {$0.key < $1.key}).toInitParam()
             + ") {\n"
@@ -158,9 +162,11 @@ struct StructModel {
             + variables.sorted( by: {$0.key < $1.key}).toDictionaryString()
             + "\t\treturn dictionary\n"
             + "\t}\n"
+            
             + "\tenum CodingKeys: String, CodingKey {\n"
             + variables.sorted( by: {$0.key < $1.key}).toKey()
             + "\t}\n"
+            
             + "}\n\n"
     }
 }
@@ -177,15 +183,19 @@ extension Sequence where Iterator.Element == (key: String, value: DataType) {
     }
     
     func toInitDeclareDataFromJson() -> String {
-        return reduce("", { $0 + "\t\tself.\($1.key.camelized) = json[\"\($1.key)\"].\($1.value.name.lowercased())Value\n"})
+        return reduce("", { $0 + "\t\tself.\($1.key.camelized) = json[Fields.\($1.key.camelized)].\($1.value.name.lowercased())Value\n"})
     }
     
     func toDictionaryString() -> String {
-        return reduce("", { $0 + "\t\tdictionary[\"\($1.key)\"] = self.\($1.key.camelized)\n"})
+        return reduce("", { $0 + "\t\tdictionary[Fields.\($1.key.camelized)] = self.\($1.key.camelized)\n"})
     }
     
     func toKey() -> String {
         return reduce("", { $0 + "\t\tcase \($1.key.camelized)\(String.createBlankBy(text: $1.key.camelized, numberOfMaxBlankSpace: 20))= \"\($1.key)\"\n"})
+    }
+    
+    func toFields() -> String {
+        return String(reduce("", { $0 + "\t\t \($1.key.camelized)\(String.createBlankBy(text: $1.key.camelized, numberOfMaxBlankSpace: 20)): \"\($1.key)\",\n"}).dropLast(2))
     }
 }
 extension String {
