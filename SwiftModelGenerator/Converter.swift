@@ -12,75 +12,52 @@ import SwiftyJSON
 class Converter {
     static func convertStringToClass(jsonString: String) -> String {
         let json = JSON.init(parseJSON: jsonString)
+        let keys = jsonString.JSONKeys
         var result = [StructModel]()
-        result.append(contentsOf: convertDictionaryToStruct(modelKey: "Model", jsonValue: json))
+        result.append(contentsOf: convertDictionaryToStruct(modelKey: "Model", jsonKeys: keys, jsonValue: json))
         return result.reduce("", { $0 + $1.toString() })
     }
-    static func convertDictionaryToStruct(modelKey: String, jsonValue: JSON) -> [StructModel] {
+    static func convertDictionaryToStruct(modelKey: String, jsonKeys: [String], jsonValue: JSON) -> [StructModel] {
         var result = [StructModel]()
         var strucModel = StructModel.init(structName: modelKey.camelized.uppercasingFirst)
-        if let jsonValue = jsonValue.dictionary {
-            jsonValue.forEach { (key, value) in
-                switch value.type {
-                case .number:
-                    if value.rawValue is Int {
-                        print("\(value.description) is Int")
-                        strucModel.variables[key] = DataType.int
-                    } else {
-                        print("\(value.description) is Double")
-                        strucModel.variables[key] = DataType.double
-                    }
-                case .string:
-                    strucModel.variables[key] = DataType.string
-                case .bool:
-                    strucModel.variables[key] = DataType.bool
-                case .array:
-                    if let arrayValue = value.array,
-                        let json = arrayValue.sorted(by: { (first, second) -> Bool in
-                            first.count > second.count
-                        }).first {
-                        strucModel.variables[key] = DataType.listOf(structName: key.singularize().uppercasingFirst)
-                        result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.singularize().uppercasingFirst, jsonValue: json))
-                    }
-                case .dictionary:
-                    strucModel.structName = modelKey.camelized.uppercasingFirst
-                    strucModel.variables[key] = DataType.typeStruct(structName: key)
-                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.uppercasingFirst, jsonValue: value))
-                default :
-                    strucModel.structName = modelKey.camelized.uppercasingFirst
-                    strucModel.variables[key] = DataType.typeStruct(structName: key)
-                }
+        jsonKeys.forEach { key in
+            let value: JSON = jsonValue[key]
+            if value.error != nil {
+                return
             }
-            result.append(strucModel)
+            switch value.type {
+            case .number:
+                if value.rawValue is Int {
+                    print("\(value.description) is Int")
+                    strucModel.variables.append((key,DataType.int))
+                } else {
+                    print("\(value.description) is Double")
+                    strucModel.variables.append((key,DataType.double))
+                }
+            case .string:
+                strucModel.variables.append((key,DataType.string))
+            case .bool:
+                strucModel.variables.append((key,DataType.bool))
+            case .array:
+                if let arrayValue = value.array,
+                    let json = arrayValue.sorted(by: { (first, second) -> Bool in
+                        first.count > second.count
+                    }).first {
+                    strucModel.variables.append((key, DataType.listOf(structName: key.singularize().uppercasingFirst)))
+                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.singularize().uppercasingFirst, jsonKeys: jsonKeys, jsonValue: json))
+                }
+            case .dictionary:
+                strucModel.structName = modelKey.camelized.uppercasingFirst
+                strucModel.variables.append((key,DataType.typeStruct(structName: key)))
+                result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.uppercasingFirst, jsonKeys: jsonKeys, jsonValue: value))
+
+            default :
+                strucModel.structName = modelKey.camelized.uppercasingFirst
+                strucModel.variables.append((key, DataType.typeStruct(structName: key)))
+            }
         }
+        result.append(strucModel)
         return result
-//        if let value = value as? [String: Any] {
-//            value.forEach { (key, value) in
-//                if value is String {
-//                    strucModel.variables[key] = DataType.string
-//                } else if value is Bool {
-//                    strucModel.variables[key] = DataType.bool
-//                } else if value is Double {
-//                    if value is Int {
-//                        strucModel.variables[key] = DataType.int
-//                    } else {
-//                        strucModel.variables[key] = DataType.double
-//                    }
-//                }  else if value is [String: Any] {
-//                    strucModel.structName = modelKey.camelized.uppercasingFirst
-//                    strucModel.variables[key] = DataType.typeStruct(structName: key)
-//                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.uppercasingFirst, value: value as! [String: Any]))
-//                } else if value is [Any] {
-//                    strucModel.variables[key] = DataType.listOf(structName: key.singularize().uppercasingFirst)
-//                    result.append(contentsOf: Converter.convertDictionaryToStruct(modelKey: key.singularize().uppercasingFirst, value: (value as! [Any]).first))
-//                } else { // Nil will default declare by Model
-//                    strucModel.structName = modelKey.camelized.uppercasingFirst
-//                    strucModel.variables[key] = DataType.typeStruct(structName: key)
-//                }
-//            }
-//            result.append(strucModel)
-//        }
-        
     }
 }
 
@@ -134,44 +111,44 @@ enum DataType {
 // Model
 struct StructModel {
     var structName: String
-    var variables: [String: DataType]
+    var variables: [(key: String, value: DataType)]
     init(structName: String) {
         self.structName = structName
-        self.variables = [String: DataType]()
+        self.variables = [(key: String, value: DataType)]()
     }
     func toString() -> String {
         return "struct \(structName): Codable {\n"
-            + variables.sorted( by: {$0.key < $1.key}).toString()
+            + variables.toVariablesString()
             
             + "\tprivate let Fields = (\n"
-            + variables.sorted( by: {$0.key < $1.key}).toFields()
+            + variables.toFields()
             + "\t)\n"
             
             + "\tinit("
-            + variables.sorted( by: {$0.key < $1.key}).toInitParam()
+            + variables.toInitParam()
             + ") {\n"
-            + variables.sorted( by: {$0.key < $1.key}).toInitDeclareData()
+            + variables.toInitDeclareData()
             + "\t}\n"
             
             + "\tinit?(json: JSON) {\n"
-            + variables.sorted( by: {$0.key < $1.key}).toInitDeclareDataFromJson()
+            + variables.toInitDeclareDataFromJson()
             + "\t}\n"
             
             + "\tvar dictionary: [String: Any] {\n"
             + "\t\tvar dictionary:[String: Any] = [:]\n"
-            + variables.sorted( by: {$0.key < $1.key}).toDictionaryString()
+            + variables.toDictionaryString()
             + "\t\treturn dictionary\n"
             + "\t}\n"
             
             + "\tenum CodingKeys: String, CodingKey {\n"
-            + variables.sorted( by: {$0.key < $1.key}).toKey()
+            + variables.toKey()
             + "\t}\n"
             
             + "}\n\n"
     }
 }
-extension Sequence where Iterator.Element == (key: String, value: DataType) {
-    func toString() -> String {
+extension Array where Element == (key: String, value: DataType) {
+    func toVariablesString() -> String {
         return reduce("", { $0 + "\tvar \($1.key.camelized): \($1.value.name)?\n"})
     }
     func toInitParam() -> String {
@@ -183,7 +160,16 @@ extension Sequence where Iterator.Element == (key: String, value: DataType) {
     }
     
     func toInitDeclareDataFromJson() -> String {
-        return reduce("", { $0 + "\t\tself.\($1.key.camelized) = json[Fields.\($1.key.camelized)].\($1.value.name.lowercased())Value\n"})
+        return reduce("", { initialResult , nextPartialResult in
+            let jsonValue: String = {
+                if case DataType.typeStruct(structName: let name) = nextPartialResult.value {
+                    return "\(nextPartialResult.value.name).init(json: json[Fields.\(nextPartialResult.key.camelized)])"
+                } else {
+                    return  "json[Fields.\(nextPartialResult.key.camelized)].\(nextPartialResult.value.name.lowercased())Value"
+                }
+            }()
+            return initialResult + "\t\tself.\(nextPartialResult.key.camelized) = \(jsonValue)\n"
+        })
     }
     
     func toDictionaryString() -> String {
@@ -233,5 +219,32 @@ extension String {
         let rest = parts.dropFirst().map({String($0).uppercasingFirst})
 
         return ([first] + rest).joined(separator: "")
+    }
+
+    func matches(for regex: String) -> [String] {
+
+        do {
+            let regex = try NSRegularExpression(pattern: regex)
+            let results = regex.matches(in: self,
+                                        range: NSRange(self.startIndex..., in: self))
+            return results.map {
+                String(self[Range($0.range, in: self)!])
+            }
+        } catch let error {
+            print("invalid regex: \(error.localizedDescription)")
+            return []
+        }
+    }
+
+    // Keep order of json
+    var JSONKeys: [String] {
+        return self.matches(for: "(?!\")[A-z0-9-]+(?=\"\\s*:)").uniqued()
+    }
+}
+
+extension Sequence where Element: Hashable {
+    func uniqued() -> [Element] {
+        var set = Set<Element>()
+        return filter { set.insert($0).inserted }
     }
 }
